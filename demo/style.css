@@ -1,0 +1,65 @@
+html {
+  font-family: 'Helvetica';
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+.big-button {
+  height: 200px;
+  width: 300px;
+}
+
+/* Modal */
+
+.modal-overlay {
+  background-color: red !important;
+}
+
+.modal-close {
+  cursor: pointer;
+}
+
+.modal-close-icon {
+  color: #AAA;
+}
+
+.modal-close-icon:hover {
+  color: #666;
+}
+
+.modal-close-icon::before {
+  content: '\2715';
+  font-size: 20px;
+}
+
+.simple-modal {
+  background-color: white;
+  display: none;
+  padding: 50px;
+}
+
+.confirm-modal {
+  background-color: white;
+  padding: 20px;
+  width: 500px;
+}
+
+.confirm-modal-no, .confirm-modal-yes {
+  float: right;
+  padding: 5px;
+}
+
+.confirm-modal-no {
+  margin-left: 10px;
+}
+
+.confirm-modal-content {
+  margin-bottom: 20px;
+}
