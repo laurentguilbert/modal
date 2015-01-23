@@ -20,6 +20,33 @@ var modal = new Modal(options);
 
 ## Configuration
 
+### yesText
+
+    yesText: 'Yes'
+
+### noText
+
+    noText: 'No'
+
+### appendTo
+
+Selector describing where to append the newly created elements.
+
+    appendTo: 'body'
+
+### fadeIn
+
+    fadeIn: 100
+
+### modalTemplate
+
+    modalTemplate:
+        '<div class="confirm-modal">
+            <div class="confirm-modal-content"></div>
+            <button class="confirm-modal-no"></button>
+            <button class="confirm-modal-yes"></button>
+        </div>'
+
 ## Author
 
 [Laurent Guilbert](https://github.com/laurentguilbert)
