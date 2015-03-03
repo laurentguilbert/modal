@@ -6,18 +6,9 @@
 # Released under the MIT license.
 ###
 
-((factory) ->
-  if typeof define == 'function' and define.amd
-    # AMD
-    define ['jquery'], factory
-  else if typeof exports == 'object'
-    # CommonJS
-    factory(require 'jquery')
-  else
-    # Browser Global
-    window.Modal = factory jQuery
-)(($) ->
-  moduleName = 'Modal'
+$ ->
+  "use strict";
+
   defaults =
     appendTo: 'body'
     fadeIn: 100
@@ -35,11 +26,17 @@
     keyboardYes: true
     yesText: 'Yes'
     noText: 'No'
-    confirmModalTemplate:
-      '<div class="confirm-modal">\
-        <div class="confirm-modal-content"></div>\
-        <button class="confirm-modal-no"></button>\
-        <button class="confirm-modal-yes"></button>\
+    modalConfirmationTemplate:
+      '<div class="modal" data-role="confirmation">\
+        <div class="modal-content"></div>\
+        <button class="modal-no"></button>\
+        <button class="modal-yes"></button>\
+      </div>'
+
+    notificationDuration: 5000
+    modalNotificationTemplate:
+      '<div class="modal" data-role="notification">\
+        <div class="modal-content"></div>\
       </div>'
 
   class Modal
@@ -47,7 +44,6 @@
     constructor: (options) ->
       @defaults = defaults
       @options = $.extend defaults, options
-      @_name = moduleName
 
       $(document).on 'keydown', (e) =>
         switch e.keyCode
@@ -73,7 +69,6 @@
         if @options.overlayClose
           @$overlay.on 'click', => @close()
 
-      $ =>
         $(@options.appendTo).append(@$overlay)
 
         $('[data-modal-trigger]').on 'click', (e) =>
@@ -81,7 +76,7 @@
           @show modalId
       return
 
-    showModal: ($modal) ->
+    _open: ($modal) ->
       if @options.closeButton and not $modal.find('.modal-close').length
         $close = $(@options.closeButtonTemplate).css
           position: 'absolute'
@@ -103,21 +98,14 @@
       $modal.hide()
       $modal.css 'left', '50%'
 
-      if @options.overlay
-        @$overlay.fadeIn(@options.fadeIn)
       $modal.fadeIn(@options.fadeIn)
-      $modal
 
     confirm: (options) ->
-      if not @$confirmModal?
-        @$confirmModal = $(@options.confirmModalTemplate).css
-          display: 'none'
-          position: 'absolute',
-          top: '50%',
-          zIndex: 1002
-        @$yesButton = @$confirmModal.find('.confirm-modal-yes')
-        @$noButton = @$confirmModal.find('.confirm-modal-no')
-        $(@options.appendTo).append(@$confirmModal)
+      if not @$modalConfirmation?
+        @$modalConfirmation = $(@options.modalConfirmationTemplate).hide()
+        @$yesButton = @$modalConfirmation.find('.modal-yes')
+        @$noButton = @$modalConfirmation.find('.modal-no')
+        $(@options.appendTo).append(@$modalConfirmation)
 
       @$yesButton.off 'click'
       @$yesButton.on 'click', =>
@@ -129,24 +117,47 @@
         options.noCallback() if options.noCallback?
         @close()
 
-      @$confirmModal.find('.confirm-modal-content').html(options.content or '')
+      @$modalConfirmation.find('.modal-content').html(options.content or '')
       @$yesButton.html(options.yesText or @options.yesText)
       @$noButton.html(options.noText or @options.noText)
 
-      @showModal @$confirmModal
+      if @options.overlay
+        @$overlay.fadeIn(@options.fadeIn)
+      @_open @$modalConfirmation
       return
+
+    notify: (options) ->
+      if not @$modalNotification?
+        @$modalNotification = $(@options.modalNotificationTemplate).css
+          display: 'none'
+          position: 'absolute',
+          top: '50%',
+          zIndex: 1002
+        $(@options.appendTo).append(@$modalNotification)
+
+      @$modalNotification.attr('data-level', options.level or 'info');
+      @$modalNotification.find('.modal-content').html(options.content or '')
+
+      @_open @$modalNotification
+      fadeNotification = =>
+        @$modalNotification.fadeOut(@options.notificationFadeout)
+      setTimeout(fadeNotification, @options.notificationDuration)
 
     show: (modalId) ->
       $modal = $ '[data-modal="' + modalId + '"]'
       if not $modal.length
         return
-      @showModal $modal
+      if @options.overlay
+        @$overlay.fadeIn(@options.fadeIn)
+      @_open $modal
 
     close: ->
-      $('[data-modal]:visible').hide()
+      $('.modal,[data-modal]').hide()
       if @options.overlay
         @$overlay.hide()
-      if @$confirmModal? and @$confirmModal.is ':visible'
-        @$confirmModal.hide()
       return
-)
+
+  # Modal is a singleton and therefore should only be instantiated once.
+  window.Modal or= new Modal(modalOptions ? {});
+
+  return
