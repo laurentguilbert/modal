@@ -12,6 +12,8 @@ button {
 }
 
 .big-button {
+  display: block;
+  margin: 10px;
   height: 200px;
   width: 300px;
 }
@@ -45,21 +47,25 @@ button {
   padding: 50px;
 }
 
-.confirm-modal {
+.modal {
   background-color: white;
   padding: 20px;
   width: 500px;
 }
 
-.confirm-modal-no, .confirm-modal-yes {
+.modal-no, .modal-yes {
   float: right;
   padding: 5px;
 }
 
-.confirm-modal-no {
+.modal-no {
   margin-left: 10px;
 }
 
-.confirm-modal-content {
+.modal-content {
   margin-bottom: 20px;
+}
+
+.modal[data-role="notification"][data-level="info"] {
+  background-color: #DBFFFE;
 }
