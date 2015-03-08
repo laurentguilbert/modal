@@ -29,8 +29,10 @@ $ ->
     modalConfirmationTemplate:
       '<div class="modal" data-role="confirmation">\
         <div class="modal-content"></div>\
-        <button class="modal-no"></button>\
-        <button class="modal-yes"></button>\
+        <div class="modal-buttons">\
+          <button class="modal-no"></button>\
+          <button class="modal-yes"></button>\
+        </div>
       </div>'
 
     notificationDuration: 5000
