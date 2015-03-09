@@ -1,4 +1,4 @@
-# Modal
+![modal-logo](https://cloud.githubusercontent.com/assets/1875772/6561699/93c39c12-c693-11e4-9028-394b66319193.jpg)
 
 This is a very simple and lightweight script to create modals.
 
