@@ -1,7 +1,6 @@
 ###
 # Modal
 # https://github.com/laurentguilbert/modal
-#
 # Copyright (c) 2015 Laurent Guilbert
 # Released under the MIT license.
 ###
