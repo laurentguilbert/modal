@@ -1,45 +1,31 @@
 QUnit.assert.modalHidden = function($modal) {
-    var isHidden = $modal.not(':visible');
-    this.ok(isHidden, 'Modal is hidden.');
+    this.ok($modal.not(':visible'), 'Modal is hidden.');
 };
 
 QUnit.assert.modalVisible = function($modal) {
-    var isVisible = $modal.is(':visible');
-    this.ok(isVisible, 'Modal is visible.');
+    this.ok($modal.is(':visible'), 'Modal is visible.');
 };
 
-test('override options', function(assert) {
-    assert.expect(1);
-    options = {yesText: 'Oui'};
-    var modal = new Modal(options);
-    assert.deepEqual(
-        modal.options.yesText, options.yesText, 'yesText overriden.');
-});
-
-module('modal', {
-    beforeEach: function() {
-        this.$simpleModal = $('.simple-modal');
-        this.$simpleModalButton = $('.simple-modal-button');
-        this.$confirmModalButton = $('.confirm-modal-button');
-        var options = {
-            appendTo: '#qunit-fixture',
-            fadeIn: 0 // Disable fadeIn for testing.
-        };
-        this.modal = new Modal(options);
-    }
-});
+module('modal', { beforeEach: function() {} });
 
 test('trigger simple modal', function(assert) {
+    var $simpleModal = $('.simple-modal');
+    var $simpleModalButton = $('.simple-modal-button');
     assert.expect(2);
-    assert.modalHidden(this.$simpleModal);
-    this.$simpleModalButton.trigger('click');
-    assert.modalVisible(this.$simpleModal);
+    assert.modalHidden($simpleModal);
+    $simpleModalButton.trigger('click');
+    assert.modalVisible($simpleModal);
 });
 
 test('trigger confirm modal', function(assert) {
-    assert.expect(2);
-    assert.ok($('.confirm-modal').length === 0, 'Modal is not created yet');
-    this.modal.confirm({});
-    this.$confirmModalButton.trigger('click');
-    assert.modalVisible($('.confirm-modal'));
+    assert.expect(3);
+    assert.ok(
+        $('.modal[data-role="confirmation"]').length === 0,
+        'Modal is not created yet'
+    );
+    Modal.confirm({});
+    var $confirmModal = $('.modal[data-role="confirmation"]');
+    assert.modalVisible($confirmModal);
+    $confirmModal.find('.modal-yes').trigger('click');
+    assert.modalHidden($confirmModal);
 });

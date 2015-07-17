@@ -5,7 +5,15 @@
     <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.16.0.css">
     <script src="http://code.jquery.com/qunit/qunit-1.16.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="../lib/modal.js"></script>
+    <script>
+      // Disable effects for testing purposes.
+      var modalOptions = {
+          appendTo: '#qunit-fixture',
+          fadeIn: 0,
+          notificationFadeout: 0
+      };
+    </script>
+    <script src="../lib/modal.min.js"></script>
     <script src="tests.js"></script>
   </head>
   <body>
