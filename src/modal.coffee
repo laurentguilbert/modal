@@ -73,7 +73,7 @@ $ ->
         $(@options.appendTo).append(@$overlay)
 
         $('[data-modal-trigger]').on 'click', (e) =>
-          modalId = $(e.target).data('modal-trigger')
+          modalId = $(e.currentTarget).data('modal-trigger')
           @show modalId
       return
 
