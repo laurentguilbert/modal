@@ -4,7 +4,7 @@ This is a very simple and lightweight script to create modals.
 
 It allows you to create **lightboxes**, **confirmation dialogs** and **self-destruct notifications**.
 
-Look at the included demo for examples of what you can do.
+Checkout the [demo](http://laurentguilbert.github.io/modal/)!
 
 ## Installation
 
