@@ -1,1 +1,31 @@
-My Page
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demo simple</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div class="simple-modal" data-modal="hello">Hello modal!</div>
+
+    <button class="big-button" data-modal-trigger="hello">Simple modal</button>
+    <button class="big-button js-confirm">Confirmation modal</button>
+    <button class="big-button js-notify">Notification modal</button>
+
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="modal.min.js"></script>
+    <script>
+      $('.js-confirm').on('click', function() {
+        Modal.confirm({
+          content: 'Confirm ?',
+          yesCallback: function() { alert('Yes'); },
+          noCallback: function() { alert('No'); }
+        });
+      });
+      $('.js-notify').on('click', function() {
+        Modal.notify({
+          content: 'Here goes your super important notification.'
+        });
+      });
+    </script>
+  </body>
+</html>
